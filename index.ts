@@ -2,7 +2,7 @@ import * as express from 'express';
 import { Server } from './server';
 
 import * as mongoose from 'mongoose';
-import { dbData } from './utils/mongodb';
+import { dbData } from './utils/mongodb.util';
 
 
 /*** DB Setting ***/
