@@ -2,16 +2,16 @@ import { encriptionPasswd } from "../utils/encription.util";
 
 
 export class UserResource {
-    private userName;
-    private userId;
-    private userPw;
-    private major;
-    private admissionYear;
+    private userName: string;
+    private userId: string;
+    private userPw: string;
+    private major: string;
+    private admissionYear: number;
 
     constructor(signUpData: any) {
         this.userName = signUpData.userName;
         this.userId = signUpData.userId;
-        this.userPw = encriptionPasswd.getHash(this.userPw); // encriptionPasswd
+        this.userPw = encriptionPasswd.getHash(signUpData.userPw); // encriptionPasswd
         this.major = signUpData.major;
         this.admissionYear = signUpData.admissionYear;
     }

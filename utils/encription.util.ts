@@ -13,7 +13,7 @@ const keyLength: number = 16;
 const digest: string = 'sha512';
 
 class EncriptionPasswd {
-    getHash(passwd): string {
+    getHash(passwd: string): string {
         let derivedKey = pbkdf2.pbkdf2Sync(passwd, salt, iterations, keyLength, digest);
         return derivedKey.toString('hex');
     }
