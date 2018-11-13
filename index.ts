@@ -11,6 +11,9 @@ const dbPasswd = dbData.dbPassword;
 const mlabURI = dbData.mlabURI;
 const dbURI = `mongodb://${dbName}:${dbPasswd}@${mlabURI}`;
 mongoose.connect(dbURI, { useNewUrlParser: true });
+mongoose.set('useCreateIndex', true);
+mongoose.set('findOneAndUpdate', true);
+mongoose.set('deleteOne', true);
 
 const db = mongoose.connection;
 db.once("open", () => {
