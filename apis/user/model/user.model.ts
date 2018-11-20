@@ -1,11 +1,53 @@
-import * as mongoose from 'mongoose';
+import { userModel } from "../../../dbSchema/userSchema";
 
-const userSchema: any = mongoose.Schema({
-    userName: {type: String, required: true},
-    userId: {type: String, required: true, unique: true},
-    userPw: {type: String, required: true},
-    major: {type: String},
-    admissionYear: {type: Number}
-});
+export class User {
+    constructor() { }
 
-export const userModel: any = mongoose.model("users", userSchema);
+    createUser(userData: any): Promise<any> {
+        return new Promise( async (resolve, reject) => {
+           await userModel.create(userData, (err, result) => {
+               if(err) reject(err);
+               else resolve(result);
+           })
+        });
+    }
+
+    listUser(): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+           await userModel.find({}, (err, results) => {
+               if(err) reject(err);
+               else resolve(results);
+           })
+        });
+    }
+
+    getUser(userId: string): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await userModel.findOne({userId: userId}, (err, result) => {
+                if(err) reject(err);
+                else resolve(result);
+            })
+        });
+    }
+
+    updateUser(userId: string, userData: any): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await userModel.findOneAndUpdate({userId: userId}, userData, {new: true}, (err, result) => {
+                if(err) reject(err);
+                else resolve(result);
+            })
+        });
+    }
+
+    deleteUser(userId: string): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await  userModel.remove({userId: userId}, (err, result) => {
+                if(err) reject(err);
+                else resolve(result);
+            })
+        });
+    }
+
+}
+
+export const user: User = new User();

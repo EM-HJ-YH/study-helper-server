@@ -1,6 +1,6 @@
 import * as express from 'express';
-import { userModel } from "../model/user.model";
 import { UserResource } from "../../../resources/user.resource";
+import { user } from "../model/user.model";
 
 export class UserRoutes {
     public userRouter: express.Router = express.Router();
@@ -18,43 +18,104 @@ export class UserRoutes {
     }
 }
 
-function createUser(req, res) {
+async function createUser(req, res) : Promise<void> {
     const userData: any = new UserResource(req.body);
-    userModel.create(userData.getUserResource(), (err, result) => {
-        if(err) return res.json(err);
-        res.send(result);
-    });
+    try {
+        const result: any = await user.createUser(userData.getUserResource());
+        res.send({
+           success: true,
+           statusCode: 200,
+           result: result,
+           message: 'createUser 200'
+        });
+    }
+    catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'createUser 500'
+        });
+    }
 }
 
-function listUsers(req, res) {
-    userModel.find({}, (err, results) => {
-        if(err) return res.json(err);
-        res.send(results);
-    });
+async function listUsers(req, res) : Promise<void> {
+    try {
+        const result: any = await user.listUser();
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'listUser 200'
+        });
+    }
+    catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'listUser 500'
+        });
+    }
 }
 
-function getUser(req, res) {
-    let userId: string = req.params.userId;
-    userModel.findOne({userId:userId}, (err, result) => {
-        if(err) return res.json(err);
-        res.send(result);
-    });
+async function getUser(req, res): Promise<void> {
+    const userId: string = req.params.userId;
+    try {
+        const result: any = await user.getUser(userId);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'getUser 200'
+        });
+    }
+    catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'getUser 500'
+        });
+    }
 }
 
-function updateUser(req, res) {
-    let userId: string = req.params.userId;
-    userModel.findOneAndUpdate({userId:userId}, req.body, {new: true}, (err, result) => {
-        if(err) return res.json(err);
-        res.send(result);
-    });
+async function updateUser(req, res): Promise<void> {
+    const userId: string = req.params.userId;
+    const userData: any = new UserResource(req.body);
+    try {
+        const result: any = await user.updateUser(userId, userData.getUserResource());
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'updateUser 200'
+        });
+    }
+    catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'updateUser 500'
+        });
+    }
 }
 
-function deleteUser(req, res) {
-    let userId: string = req.params.userId;
-    userModel.remove({userId:userId}, (err) => {
-        if(err) return res.json(err);
-        res.send("delete user");
-    });
+async function deleteUser(req, res): Promise<void> {
+    const userId: string = req.params.userId;
+    try {
+        const result: any = await user.deleteUser(userId);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'deleteUser 200'
+        });
+    }
+    catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'deleteUser 500'
+        });
+    }
 }
 
 export const userRoutes: UserRoutes = new UserRoutes();
