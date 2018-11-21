@@ -5,3 +5,4 @@ node_modules
 *.xml
 *.iml
 utils/mongodb.util.ts
+utils/jwt.util.ts

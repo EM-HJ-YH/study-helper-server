@@ -3,6 +3,7 @@ import * as bodyParser from 'body-parser';
 //import * as cors from 'cors';
 
 import { userRoutes } from "./apis/user/route/user.route";
+import { signInRoutes } from "./apis/sign/route/signIn.route";
 
 export class Server {
 
@@ -29,6 +30,7 @@ export class Server {
 
         /*** add Router ***/
         this.app.use(userRoutes.userRouter);
+        this.app.use(signInRoutes.signInRoutes);
 
     }
 }
