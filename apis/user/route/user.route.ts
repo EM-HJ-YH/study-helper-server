@@ -19,7 +19,8 @@ export class UserRoutes {
 }
 
 async function createUser(req, res) : Promise<void> {
-    const userData: any = new UserResource(req.body);
+    const userData: any = new UserResource();
+    userData.setUserResource(req.body);
     try {
         const result: any = await user.createUser(userData.getUserResource());
         res.send({
@@ -79,7 +80,8 @@ async function getUser(req, res): Promise<void> {
 
 async function updateUser(req, res): Promise<void> {
     const userId: string = req.params.userId;
-    const userData: any = new UserResource(req.body);
+    const userData: any = new UserResource();
+    userData.updateUserResource(req.body);
     try {
         const result: any = await user.updateUser(userId, userData.getUserResource());
         res.send({
