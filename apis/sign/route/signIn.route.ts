@@ -5,7 +5,18 @@ export class SignInRoutes {
     public signInRoutes: express.Router = express.Router();
 
     constructor() {
+        const idx = this.setUserIndex();
         this.router();
+    }
+
+    async setUserIndex(): Promise<void> {
+        try {
+            const result = await signIn.getUserIndex();
+            if (result == null) await signIn.setUserIndex(0);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     router() {
@@ -15,6 +26,9 @@ export class SignInRoutes {
 
 async function signInUser(req, res): Promise<void> {
     try {
+        const userIdx: any = await signIn.getUserIndex();
+        userIdx.modelIndex = userIdx.modelIndex+1;
+        const userIdxRes: any = await signIn.incUserIndex(userIdx.modelIndex);
         let result: any = await signIn.signInUser(req.body);
         res.send({
             success: true,

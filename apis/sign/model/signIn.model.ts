@@ -3,9 +3,37 @@ import * as jwt from 'jsonwebtoken';
 import { userModel } from "../../../dbSchema/userSchema";
 import { encriptionPasswd } from "../../../utils/encription.util";
 import { jwtData } from "../../../utils/jwt.util";
+import { indexModel } from "../../../dbSchema/indexSchema";
 
 export class SignIn {
     constructor() { }
+
+    setUserIndex(userIndex: number): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await indexModel.create({model: 'user', modelIndex: userIndex}, (err, result) => {
+               if(err) reject("signIn.model.setUserIndex() error");
+               else resolve(result);
+            });
+        });
+    }
+
+    getUserIndex(): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await indexModel.findOne({model: 'user'}, (err, result) => {
+                if(err) reject("getUserIndex() error");
+                else resolve(result);
+            });
+        });
+    }
+
+    incUserIndex(userIndex: number): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+            await indexModel.findOneAndUpdate({model: 'user'}, {model:'user', modelIndex: userIndex}, {new: true}, (err, result) => {
+                if(err) reject(err);
+                else resolve(result);
+            });
+        });
+    }
 
     signInUser(userData: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
