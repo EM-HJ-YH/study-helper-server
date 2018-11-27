@@ -44,7 +44,9 @@ export class Board {
         return new Promise(async (resolve, reject) => {
            await boardModel.find({}, (err, results) => {
                if(err) reject(err);
-               else resolve(results);
+               else resolve(results.sort((a, b) => {
+                   return b.boardIndex - a.boardIndex;
+               }));
            })
         });
     }
@@ -54,7 +56,7 @@ export class Board {
            await boardModel.findOne({boardIndex: boardIndex}, (err, result) => {
                if(err) reject(err);
                else resolve(result);
-           })
+           });
         });
     }
 
@@ -64,6 +66,24 @@ export class Board {
                 if(err) reject(err);
                 else resolve(result);
             })
+        });
+    }
+
+    addMember(boardIndex: number, memberId: string, boardData: any): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            console.log(">>> "+boardData);
+            let members: any = boardData.members;
+            if(members.length >= boardData.memberCount) reject('exceed the number of members.');
+            else {
+                if (members.includes(memberId)) reject(memberId + ' is already exist.')
+                else {
+                    members.push(memberId);
+                    await boardModel.findOneAndUpdate({boardIndex: boardIndex}, {$set: {members: members}}, {new: true}, (err, result) => {
+                        if (err) reject(err);
+                        else resolve(result);
+                    });
+                }
+            }
         });
     }
 

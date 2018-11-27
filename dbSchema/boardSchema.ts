@@ -7,7 +7,7 @@ const boardSchema: any = mongoose.Schema({
     boardContent: { type: String },
     boardDate: { type: String },
     memberCount: { type: Number },
-    members: { type: Array }, //
+    members: { type: Array },
     isRecruiting: { type: Boolean }
 });
 
