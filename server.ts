@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 
 import { userRoutes } from "./apis/user/route/user.route";
 import { signInRoutes } from "./apis/sign/route/signIn.route";
+import { boardRoutes } from "./apis/board/route/board.route";
 
 export class Server {
 
@@ -32,6 +33,8 @@ export class Server {
         this.app.use(userRoutes.userRouter);
         this.app.use(signInRoutes.signInRoutes);
 
+        /*** do adding token verify code ***/
+        this.app.use(boardRoutes.boardRouter);
     }
 }
 

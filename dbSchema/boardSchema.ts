@@ -2,12 +2,12 @@ import * as mongoose from 'mongoose';
 
 const boardSchema: any = mongoose.Schema({
     boardIndex: { type: Number, required: true, unique: true },
-    userId: { type: String, required: true, unique: true },
+    userId: { type: String, required: true },
     boardTitle: { type: String, required: true },
     boardContent: { type: String },
-    boardDate: { type: Date },
+    boardDate: { type: String },
     memberCount: { type: Number },
-    members: { type: Array },
+    members: { type: Array }, //
     isRecruiting: { type: Boolean }
 });
 
