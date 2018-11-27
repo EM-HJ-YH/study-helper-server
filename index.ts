@@ -14,6 +14,8 @@ mongoose.connect(dbURI, { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
 mongoose.set('findOneAndUpdate', true);
 mongoose.set('deleteOne', true);
+mongoose.set('useFindAndModify', false);
+
 
 const db = mongoose.connection;
 db.once("open", () => {
