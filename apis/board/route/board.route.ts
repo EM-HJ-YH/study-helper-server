@@ -132,10 +132,28 @@ async function addMember(req, res) : Promise<void> {
             message: 'boards::addMember 500 >> ' + err
         });
     }
-
 }
 
 async function removeMember(req, res) : Promise<void> {
+    const boardIndex: number = req.params.boardIndex;
+    const memberId: string = req.params.memberId;
+    try {
+        const boardData: any = await board.getBoard(boardIndex);
+        const result: any = await board.removeMember(boardIndex, memberId, boardData);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'boards::removeMember 200'
+        });
+
+    } catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'boards::removeMember 500 >> ' + err
+        });
+    }
 
 }
 

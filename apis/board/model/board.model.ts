@@ -71,7 +71,6 @@ export class Board {
 
     addMember(boardIndex: number, memberId: string, boardData: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            console.log(">>> "+boardData);
             let members: any = boardData.members;
             if(members.length >= boardData.memberCount) reject('exceed the number of members.');
             else {
@@ -84,6 +83,23 @@ export class Board {
                     });
                 }
             }
+        });
+    }
+
+    removeMember(boardIndex: number, memberId: string, boardData: any): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+           if(memberId == boardData.userId) reject('Poster cannot be removed.');
+           else {
+               let members: any = boardData.members;
+               if(!members.includes(memberId)) reject(memberId + ' does not exist.');
+               else {
+                   members.pop(memberId);
+                   await boardModel.findOneAndUpdate({boardIndex: boardIndex}, {$set: {members: members}}, {new: true}, (err, result) => {
+                       if (err) reject(err);
+                       else resolve(result);
+                   });
+               }
+           }
         });
     }
 
