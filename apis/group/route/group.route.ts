@@ -22,6 +22,8 @@ export class GroupRoute {
     router() {
         this.groupRouter.post('/groups', createGroup);
         this.groupRouter.get('/groups', listGroups);
+        this.groupRouter.get('/groups/myGroup/:userId', listMyGroup);
+        this.groupRouter.put('/groups/removeMember/:groupIndex/:memberId', removeMember);
         this.groupRouter.put('/groups/:groupIndex', updateGroup);
         this.groupRouter.delete('/groups/:groupIndex', deleteGroup);
     }
@@ -62,7 +64,47 @@ async function listGroups(req, res): Promise<void> {
             success: false,
             statusCode: 500,
             message: 'listGroups 500'
-        })
+        });
+    }
+}
+
+async function listMyGroup(req, res): Promise<void> {
+    const userId: string = req.params.userId;
+    try {
+        const result: any = await group.listMyGroup(userId);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'listMyGroups 200'
+        });
+    } catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'listMyGroups 500' + err
+        });
+    }
+}
+
+async function removeMember(req, res): Promise<void> {
+    const groupIndex: number = req.params.groupIndex;
+    const memberId: string = req.params.memberId;
+    try {
+        const groupData: any = await group.getGroup(groupIndex);
+        const result: any = await group.removeMember(groupIndex, memberId, groupData);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'groups::removeMember 200'
+        });
+    } catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'groups::removeMember 500 >> ' + err
+        });
     }
 }
 
@@ -80,7 +122,7 @@ async function updateGroup(req, res): Promise<void> {
         res.send({
             success: false,
             statusCode: 500,
-            message: 'updateGroup 500'
+            message: 'updateGroup 500 >> ' + err
         });
     }
 }

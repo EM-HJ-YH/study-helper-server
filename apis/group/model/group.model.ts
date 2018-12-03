@@ -49,6 +49,42 @@ export class Group {
         });
     }
 
+    listMyGroup(userId: string): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+           await groupModel.find({members: userId}, (err, results) => {
+              if(err) reject(err);
+              else resolve(results);
+           });
+        });
+    }
+
+    getGroup(groupIndex: number): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+           await groupModel.findOne({groupIndex: groupIndex}, (err, result) => {
+               if(err) reject(err);
+               else resolve(result);
+           });
+        });
+    }
+
+    removeMember(groupIndex: number, memberId: string, groupData: any): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            console.log(">> " + groupData);
+           if(memberId == groupData.groupMasterId) reject('Group master cannot be removed');
+           else {
+               let members: any = groupData.members;
+               if(!members.includes(memberId)) reject(memberId + ' does not exist');
+               else {
+                   members.pop(memberId);
+                   await groupModel.findOneAndUpdate({groupIndex: groupIndex}, {$set: {members: members}}, {new: true}, (err, result) => {
+                      if(err) reject(err);
+                      else resolve(result);
+                   });
+               }
+           }
+        });
+    }
+
     updateGroup(groupIndex: number, groupData: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
            await groupModel.findOneAndUpdate({groupIndex: groupIndex}, groupData, {new: true}, (err, result) => {
@@ -63,11 +99,9 @@ export class Group {
             await groupModel.remove({groupIndex: groupIndex}, (err, result) => {
                 if(err) reject(err);
                 else resolve(result);
-            })
-        })
+            });
+        });
     }
-
-
 }
 
 export const group: Group = new Group();
