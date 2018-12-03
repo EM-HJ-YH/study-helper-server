@@ -24,7 +24,7 @@ export class GroupBoard {
 
     incGroupBoardIndex(groupBoardIndex: number): Promise<void> {
         return new Promise(async (resolve, reject) => {
-           await indexModel.findOneAndUpdate({model: 'groupBoard'}, {model: 'groupBaord', modelIndex: groupBoardIndex}, {new: true}, (err, result) => {
+           await indexModel.findOneAndUpdate({model: 'groupBoard'}, {model: 'groupBoard', modelIndex: groupBoardIndex}, {new: true}, (err, result) => {
                if(err) reject(err);
                else resolve(result);
            });
