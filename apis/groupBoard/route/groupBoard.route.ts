@@ -22,6 +22,8 @@ export class GroupBoardRoute {
     router() {
         this.groupBoardRouter.get('/groupBoards', auth, listGroupBoard);
         this.groupBoardRouter.post('/groupBoards', auth, createGroupBoard);
+        this.groupBoardRouter.get('/groupBoards/:groupBoardIndex', auth, getGroupBoardByIndex);
+        this.groupBoardRouter.get('/groupBoards/group/:groupIndex', auth, getGroupBoardByGroup)
         this.groupBoardRouter.put('/groupBoards/:groupBoardIndex', auth, updateGroupBoard);
         this.groupBoardRouter.delete('/groupBoards/:groupBoardIndex', auth, deleteGroupBoard);
     }
@@ -63,6 +65,46 @@ async function listGroupBoard(req, res): Promise<void> {
             success: false,
             statusCode: 500,
             message: 'listGroupBoard 500' + err
+        });
+    }
+}
+
+async function getGroupBoardByIndex(req, res): Promise<void> {
+    const groupBoardIndex: number = req.params.groupBoardIndex;
+    try {
+        const result: any = await groupBoard.getGroupBoardByIndex(groupBoardIndex);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'getGroupBoardByIndex 200'
+        })
+    }
+    catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'getGroupBoardByIndex 500' + err
+        });
+    }
+}
+
+async function getGroupBoardByGroup(req, res): Promise<void> {
+    const groupIndex: number = req.params.groupIndex;
+    try {
+        const result: any = await groupBoard.getGroupBoardByGroup(groupIndex);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'getGroupBoardByGroup 200'
+        })
+    }
+    catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'getGroupBoardByGroup 500' + err
         });
     }
 }
