@@ -20,9 +20,9 @@ export class GroupBoardRoute {
     }
 
     router() {
+        this.groupBoardRouter.get('/groupBoards', listGroupBoard);
         this.groupBoardRouter.use(auth);
         this.groupBoardRouter.post('/groupBoards', createGroupBoard);
-        this.groupBoardRouter.get('/groupBoards', listGroupBoard);
         this.groupBoardRouter.put('/groupBoards/:groupBoardIndex', updateGroupBoard);
         this.groupBoardRouter.delete('/groupBoards/:groupBoardIndex', deleteGroupBoard);
     }

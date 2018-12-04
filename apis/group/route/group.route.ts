@@ -21,9 +21,9 @@ export class GroupRoute {
     }
 
     router() {
+        this.groupRouter.get('/groups', listGroups);
         this.groupRouter.use(auth);
         this.groupRouter.post('/groups', createGroup);
-        this.groupRouter.get('/groups', listGroups);
         this.groupRouter.get('/groups/myGroup/:userId', listMyGroup);
         this.groupRouter.put('/groups/removeMember/:groupIndex/:memberId', removeMember);
         this.groupRouter.put('/groups/:groupIndex', updateGroup);
