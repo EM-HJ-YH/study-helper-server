@@ -69,7 +69,6 @@ export class Group {
 
     removeMember(groupIndex: number, memberId: string, groupData: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            console.log(">> " + groupData);
            if(memberId == groupData.groupMasterId) reject('Group master cannot be removed');
            else {
                let members: any = groupData.members;
