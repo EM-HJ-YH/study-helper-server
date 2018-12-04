@@ -20,11 +20,10 @@ export class GroupBoardRoute {
     }
 
     router() {
-        this.groupBoardRouter.get('/groupBoards', listGroupBoard);
-        //this.groupBoardRouter.use(auth);
-        this.groupBoardRouter.post('/groupBoards', createGroupBoard);
-        this.groupBoardRouter.put('/groupBoards/:groupBoardIndex', updateGroupBoard);
-        this.groupBoardRouter.delete('/groupBoards/:groupBoardIndex', deleteGroupBoard);
+        this.groupBoardRouter.get('/groupBoards', auth, listGroupBoard);
+        this.groupBoardRouter.post('/groupBoards', auth, createGroupBoard);
+        this.groupBoardRouter.put('/groupBoards/:groupBoardIndex', auth, updateGroupBoard);
+        this.groupBoardRouter.delete('/groupBoards/:groupBoardIndex', auth, deleteGroupBoard);
     }
 }
 

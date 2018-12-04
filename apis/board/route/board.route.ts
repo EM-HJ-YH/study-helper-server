@@ -23,13 +23,12 @@ export class BoardRoute {
     router() {
         this.boardRouter.get('/boards', listBoards);
         this.boardRouter.get('/boards/:boardIndex', getBoard)
-        //this.boardRouter.use(auth);
-        this.boardRouter.post('/boards', createBoard);
-        this.boardRouter.put('/boards/:boardIndex', updateBoard);
-        this.boardRouter.put('/boards/addMember/:boardIndex/:memberId', addMember);
-        this.boardRouter.put('/boards/removeMember/:boardIndex/:memberId', removeMember);
-        this.boardRouter.put('/boards/endRecruit/:boardIndex', endRecruit);
-        this.boardRouter.delete('/boards/:boardIndex', deleteBoard);
+        this.boardRouter.post('/boards', auth, createBoard);
+        this.boardRouter.put('/boards/:boardIndex', auth, updateBoard);
+        this.boardRouter.put('/boards/addMember/:boardIndex/:memberId', auth, addMember);
+        this.boardRouter.put('/boards/removeMember/:boardIndex/:memberId', auth, removeMember);
+        this.boardRouter.put('/boards/endRecruit/:boardIndex', auth, endRecruit);
+        this.boardRouter.delete('/boards/:boardIndex', auth, deleteBoard);
     }
 }
 

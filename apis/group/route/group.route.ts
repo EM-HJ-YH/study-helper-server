@@ -21,13 +21,12 @@ export class GroupRoute {
     }
 
     router() {
-        this.groupRouter.get('/groups', listGroups);
-        //this.groupRouter.use(auth);
-        this.groupRouter.post('/groups', createGroup);
-        this.groupRouter.get('/groups/myGroup/:userId', listMyGroup);
-        this.groupRouter.put('/groups/removeMember/:groupIndex/:memberId', removeMember);
-        this.groupRouter.put('/groups/:groupIndex', updateGroup);
-        this.groupRouter.delete('/groups/:groupIndex', deleteGroup);
+        this.groupRouter.get('/groups', auth, listGroups);
+        this.groupRouter.post('/groups', auth, createGroup);
+        this.groupRouter.get('/groups/myGroup/:userId', auth, listMyGroup);
+        this.groupRouter.put('/groups/removeMember/:groupIndex/:memberId', auth, removeMember);
+        this.groupRouter.put('/groups/:groupIndex', auth, updateGroup);
+        this.groupRouter.delete('/groups/:groupIndex', auth, deleteGroup);
     }
 }
 

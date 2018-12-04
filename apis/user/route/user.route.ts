@@ -12,11 +12,10 @@ export class UserRoutes {
 
     router() {
         this.userRouter.post('/users', createUser);
-        this.userRouter.get('/users', listUsers);
-        this.userRouter.get('/users/:userId', getUser);
-        //this.userRouter.use(auth);
-        this.userRouter.put('/users/:userId', updateUser);
-        this.userRouter.delete('/users/:userId', deleteUser);
+        this.userRouter.get('/users', auth, listUsers);
+        this.userRouter.get('/users/:userId', auth, getUser);
+        this.userRouter.put('/users/:userId', auth, updateUser);
+        this.userRouter.delete('/users/:userId', auth, deleteUser);
     }
 }
 
