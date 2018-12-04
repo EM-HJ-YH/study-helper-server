@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { board } from "../model/board.model";
+import { auth } from "../../../middlewares/auth.middlewares";
 
 export class BoardRoute {
     public boardRouter: express.Router = express.Router();
@@ -20,9 +21,10 @@ export class BoardRoute {
     }
 
     router() {
-        this.boardRouter.post('/boards', createBoard);
         this.boardRouter.get('/boards', listBoards);
         this.boardRouter.get('/boards/:boardIndex', getBoard)
+        this.boardRouter.use(auth);
+        this.boardRouter.post('/boards', createBoard);
         this.boardRouter.put('/boards/:boardIndex', updateBoard);
         this.boardRouter.put('/boards/addMember/:boardIndex/:memberId', addMember);
         this.boardRouter.put('/boards/removeMember/:boardIndex/:memberId', removeMember);

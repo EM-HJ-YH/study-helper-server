@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { UserResource } from "../../../resources/user.resource";
 import { user } from "../model/user.model";
+import { auth } from "../../../middlewares/auth.middlewares";
 
 export class UserRoutes {
     public userRouter: express.Router = express.Router();
@@ -10,6 +11,7 @@ export class UserRoutes {
     }
 
     router() {
+        //this.userRouter.use(auth);
         this.userRouter.post('/users', createUser);
         this.userRouter.get('/users', listUsers);
         this.userRouter.get('/users/:userId', getUser);

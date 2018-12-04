@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { group } from "../model/group.model";
+import { auth } from "../../../middlewares/auth.middlewares";
 
 export class GroupRoute {
     public groupRouter: express.Router = express.Router();
@@ -20,6 +21,7 @@ export class GroupRoute {
     }
 
     router() {
+        this.groupRouter.use(auth);
         this.groupRouter.post('/groups', createGroup);
         this.groupRouter.get('/groups', listGroups);
         this.groupRouter.get('/groups/myGroup/:userId', listMyGroup);

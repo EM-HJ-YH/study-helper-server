@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { groupBoard } from "../model/groupBoard.model";
+import { auth } from "../../../middlewares/auth.middlewares";
 
 export class GroupBoardRoute {
     public groupBoardRouter: express.Router = express.Router();
@@ -19,6 +20,7 @@ export class GroupBoardRoute {
     }
 
     router() {
+        this.groupBoardRouter.use(auth);
         this.groupBoardRouter.post('/groupBoards', createGroupBoard);
         this.groupBoardRouter.get('/groupBoards', listGroupBoard);
         this.groupBoardRouter.put('/groupBoards/:groupBoardIndex', updateGroupBoard);
