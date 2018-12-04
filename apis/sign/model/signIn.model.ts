@@ -4,6 +4,7 @@ import { userModel } from "../../../dbSchema/userSchema";
 import { encriptionPasswd } from "../../../utils/encription.util";
 import { jwtData } from "../../../utils/jwt.util";
 import { indexModel } from "../../../dbSchema/indexSchema";
+import { adminModel } from "../../../dbSchema/adminSchema";
 
 export class SignIn {
     constructor() { }
@@ -79,6 +80,46 @@ export class SignIn {
             })
         });
     }
+
+    signInAdmin(adminData: any): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await adminModel.findOne({adminId: adminData.adminId}, (err, result) => {
+                if(err) reject('server error');
+                else {
+                    if(result == null) reject('not Found adminId');
+                    else {
+                        if(result.adminPw !== adminData.adminPw) reject('password Incorrect');
+                        else {
+                            delete result.adminPw;
+                            jwt.sign(
+                                {
+                                    tokenAdminId: result.adminId,
+                                    tokenAdmin: true
+                                },
+                                jwtData.secret,
+                                {
+                                    issuer: 'Study Helper',
+                                    algorithm: jwtData.algorithm,
+                                    expiresIn: jwtData.exp
+                                }, (err, token) => {
+                                    if(err) reject('jwt incorrect');
+                                    else {
+                                        const ret = {
+                                            adminId: result.adminId,
+                                            token: token,
+                                            isAdmin: true
+                                        };
+                                        resolve(ret);
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+            })
+        });
+    }
+
 }
 
 export const signIn: SignIn = new SignIn();

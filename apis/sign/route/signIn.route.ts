@@ -21,6 +21,7 @@ export class SignInRoutes {
 
     router() {
         this.signInRoutes.post('/signInUser', signInUser);
+        this.signInRoutes.post('/signInAdmin', signInAdmin);
     }
 }
 
@@ -43,7 +44,36 @@ async function signInUser(req, res): Promise<void> {
                 res.send({
                     success: false,
                     statusCode: 500,
-                    message: 'signInUser 500'
+                    message: 'signInUser 500 ' + err
+                });
+                break;
+            default:
+                res.send({
+                    success: false,
+                    statusCode: 500,
+                    message: err
+                });
+        }
+    }
+}
+
+async function signInAdmin(req, res): Promise<void> {
+    try {
+        const result: any = await signIn.signInAdmin(req.body);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'signInAdmin 200'
+        });
+    }
+    catch (err) {
+        switch(err) {
+            case 'server error':
+                res.send({
+                    success: false,
+                    statusCode: 500,
+                    message: 'signInAdmin 500 ' + err
                 });
                 break;
             default:
