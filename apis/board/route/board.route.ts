@@ -23,7 +23,7 @@ export class BoardRoute {
     router() {
         this.boardRouter.get('/boards', listBoards);
         this.boardRouter.get('/boards/:boardIndex', getBoard)
-        this.boardRouter.use(auth);
+        //this.boardRouter.use(auth);
         this.boardRouter.post('/boards', createBoard);
         this.boardRouter.put('/boards/:boardIndex', updateBoard);
         this.boardRouter.put('/boards/addMember/:boardIndex/:memberId', addMember);
