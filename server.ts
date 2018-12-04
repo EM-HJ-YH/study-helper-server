@@ -7,6 +7,7 @@ import { signInRoutes } from "./apis/sign/route/signIn.route";
 import { boardRoutes } from "./apis/board/route/board.route";
 import { groupRoutes } from "./apis/group/route/group.route";
 import { groupBoardRoutes } from "./apis/groupBoard/route/groupBoard.route";
+import { adminRoutes } from "./apis/admin/route/admin.route";
 
 export class Server {
 
@@ -32,10 +33,9 @@ export class Server {
         });
 
         /*** add Router ***/
-        this.app.use(userRoutes.userRouter);
+        this.app.use(adminRoutes.adminRouter);
         this.app.use(signInRoutes.signInRoutes);
-
-        /*** do adding token verify code ***/
+        this.app.use(userRoutes.userRouter);
         this.app.use(boardRoutes.boardRouter);
         this.app.use(groupRoutes.groupRouter);
         this.app.use(groupBoardRoutes.groupBoardRouter);
