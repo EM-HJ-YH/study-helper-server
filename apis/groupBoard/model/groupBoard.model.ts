@@ -51,9 +51,9 @@ export class GroupBoard {
 
     getGroupBoardByIndex(groupBoardIndex: number): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            await groupBoardModel.find({groupBoardIndex: groupBoardIndex}, (err, results) => {
+            await groupBoardModel.findOne({groupBoardIndex: groupBoardIndex}, (err, result) => {
                if(err) reject(err);
-               else resolve(results);
+               else resolve(result);
             });
         });
     }
