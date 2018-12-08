@@ -49,6 +49,20 @@ export class Schedule {
         });
     }
 
+    getMyScheduleByYearMonth(Year: string, Month: string, myGroups: string[]): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            const check: any = {
+                scheduleYear: Year,
+                scheduleMonth: Month,
+                groupName: {$in:myGroups}
+            };
+            await scheduleModel.find(check, (err, results) => {
+                if(err) reject(err);
+                else resolve(results);
+            });
+        });
+    }
+
     updateSchedule(scheduleIndex: number, scheduleData: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
            await scheduleModel.findOneAndUpdate({scheduleIndex: scheduleIndex}, scheduleData, {new: true}, (err, result) => {

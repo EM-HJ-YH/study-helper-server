@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { schedule } from "../model/schedule.model";
+import { group } from "../../group/model/group.model";
 import { auth } from "../../../middlewares/auth.middlewares";
 
 export class ScheduleRoute {
@@ -23,6 +24,7 @@ export class ScheduleRoute {
     router() {
         this.scheduleRouter.post('/schedules', auth, createSchedule);
         this.scheduleRouter.get('/schedules', auth, listSchedule);
+        this.scheduleRouter.get('/schedules/:Year/:Month/:userId', auth, getMyScheduleByYearMonth);
         this.scheduleRouter.put('/schedules/:scheduleIndex', auth, updateSchedule);
         this.scheduleRouter.delete('/schedules/:scheduleIndex', auth, deleteSchedule);
     }
@@ -64,6 +66,32 @@ async function listSchedule(req, res): Promise<void> {
             success: false,
             statusCode: 500,
             message: 'listSchedule 500'
+        });
+    }
+}
+
+async function getMyScheduleByYearMonth(req, res): Promise<void> {
+    const Year: string = req.params.Year;
+    const Month: string = req.params.Month;
+    const userId: string = req.params.userId;
+    try {
+        const myGroups: any = await group.listMyGroup(userId);
+        let myGroupNames: string[] = [];
+        for(let i=0; i<myGroups.length; i++)
+            myGroupNames.push(myGroups[i].groupName);
+        const result: any = await schedule.getMyScheduleByYearMonth(Year, Month, myGroupNames);
+        res.send({
+            success: true,
+            statusCode: 200,
+            result: result,
+            message: 'getMyScheduleByYearMonth 200'
+        })
+    }
+    catch (err) {
+        res.send({
+            success: false,
+            statusCode: 500,
+            message: 'getMyScheduleByYearMonth 500'
         });
     }
 }
