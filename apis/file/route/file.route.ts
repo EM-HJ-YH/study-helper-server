@@ -9,7 +9,7 @@ import * as multerS3 from 'multer-s3';
 import * as path from 'path';
 import { awsData } from "../../../utils/aws.util";
 
-aws.config.loadFromPath('/Users/ychooni/dev/webApp/studyHelper/utils/config/awsconfig.json');
+//aws.config.loadFromPath('/Users/ychooni/dev/webApp/studyHelper/utils/config/awsconfig.json');
 let s3 = new aws.S3();
 
 let upload = multer({
