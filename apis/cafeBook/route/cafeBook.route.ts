@@ -23,8 +23,8 @@ export class CafeBookRoute {
     router() {
         this.cafeBookRouter.post('/cafeBooks', auth, createCafeBook);
         this.cafeBookRouter.get('/cafeBooks', auth, listCafeBook);
-        this.cafeBookRouter.get('/cafeBooks/UserId/:userId', listCafeBookByUserId);
-        this.cafeBookRouter.get('/cafeBooks/cafe/:cafeIndex', listCafeBookByCafe);
+        this.cafeBookRouter.get('/cafeBooks/UserId/:userId', auth, listCafeBookByUserId);
+        this.cafeBookRouter.get('/cafeBooks/cafe/:cafeIndex', auth, listCafeBookByCafe);
         this.cafeBookRouter.put('/cafeBooks/:cafeBookIndex', auth, updateCafeBook);
         this.cafeBookRouter.delete('/cafeBooks/:cafeBookIndex', auth, deleteCafeBook);
     }
