@@ -49,6 +49,24 @@ export class CafeBook {
         });
     }
 
+    listCafeBookByUserId(userId: string): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+           await cafeBookModel.find({cafeBookUserId: userId}, (err, results) => {
+              if(err) reject(err);
+              else resolve(results);
+           });
+        });
+    }
+
+    listCafeBookByCafe(cafeIndex: number): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+           await cafeBookModel.find({cafeIndex: cafeIndex}, (err, results) => {
+              if(err) reject(err);
+              else resolve(results);
+           });
+        });
+    }
+
     updateCafeBook(cafeBookIndex: number, cafeBookData: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
            await cafeBookModel.findOneAndUpdate({cafeBookIndex: cafeBookIndex}, cafeBookData, {new: true}, (err, result) => {
