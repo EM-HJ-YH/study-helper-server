@@ -10,6 +10,7 @@ import { groupBoardRoutes } from "./apis/groupBoard/route/groupBoard.route";
 import { adminRoutes } from "./apis/admin/route/admin.route";
 import { scheduleRoutes } from "./apis/schedule/route/schedule.route";
 import { fileRoutes } from "./apis/file/route/file.route";
+import { cafeRoutes } from "./apis/cafe/route/cafe.route";
 
 export class Server {
 
@@ -43,6 +44,7 @@ export class Server {
         this.app.use(groupBoardRoutes.groupBoardRouter);
         this.app.use(scheduleRoutes.scheduleRouter);
         this.app.use(fileRoutes.fileRouter);
+        this.app.use(cafeRoutes.cafeRouter)
     }
 }
 
