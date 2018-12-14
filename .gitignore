@@ -7,4 +7,4 @@ node_modules
 utils/mongodb.util.ts
 utils/jwt.util.ts
 utils/aws.util.ts
-utils/config/awsconfig.json
+
