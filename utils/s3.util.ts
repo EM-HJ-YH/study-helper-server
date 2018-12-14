@@ -6,7 +6,7 @@ import * as path from 'path';
 import { awsData } from "./aws.util";
 
 export module s3Util {
-    aws.config.loadFromPath(__dirname + '/config/awsconfig.json');
+    aws.config.loadFromPath(__dirname + '/../config/awsConfig.json');
     let s3 = new aws.S3();
 
     export const upload = multer({
