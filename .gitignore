@@ -6,5 +6,5 @@ node_modules
 *.iml
 utils/mongodb.util.ts
 utils/jwt.util.ts
-utils/aws.util.ts
+config
 
