@@ -58,7 +58,9 @@ export class Schedule {
             };
             await scheduleModel.find(check, (err, results) => {
                 if(err) reject(err);
-                else resolve(results);
+                else resolve(results.sort((a, b) => {
+                    return b.scheduleIndex - a.scheduleIndex;
+                }));
             });
         });
     }

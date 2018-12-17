@@ -62,7 +62,9 @@ export class GroupBoard {
         return new Promise(async (resolve, reject) => {
            await groupBoardModel.find({groupIndex: groupIndex}, (err, results) => {
               if(err) reject(err);
-              else resolve(results);
+              else resolve(results.sort((a, b) => {
+                  return b.groupBoardIndex - a.groupBoardIndex;
+              }));
            });
         });
     }
