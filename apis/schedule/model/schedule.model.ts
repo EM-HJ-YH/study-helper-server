@@ -45,8 +45,8 @@ export class Schedule {
            await scheduleModel.find({}, (err, results) => {
               if(err) reject(err);
               else resolve(results.sort((a, b) => {
-                  let bs = b.scheduleYear + b.scheduleMonth;
-                  let as = a.scheduleYear + a.scheduleMonth;
+                  let bs = b.scheduleYear + b.scheduleMonth + b.scheduleDay;
+                  let as = a.scheduleYear + a.scheduleMonth + a.scheduleDay;
                   bs = parseInt(bs);
                   as = parseInt(as);
                   return bs - as;
@@ -65,8 +65,8 @@ export class Schedule {
             await scheduleModel.find(check, (err, results) => {
                 if(err) reject(err);
                 else resolve(results.sort((a, b) => {
-                    let bs = b.scheduleYear + b.scheduleMonth;
-                    let as = a.scheduleYear + a.scheduleMonth;
+                    let bs = b.scheduleYear + b.scheduleMonth + b.scheduleDay;
+                    let as = a.scheduleYear + a.scheduleMonth + a.scheduleDay;
                     bs = parseInt(bs);
                     as = parseInt(as);
                     return bs - as;
