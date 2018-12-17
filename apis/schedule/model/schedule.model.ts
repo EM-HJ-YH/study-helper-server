@@ -44,7 +44,13 @@ export class Schedule {
         return new Promise(async (resolve, reject) => {
            await scheduleModel.find({}, (err, results) => {
               if(err) reject(err);
-              else resolve(results);
+              else resolve(results.sort((a, b) => {
+                  let bs = b.scheduleYear + b.scheduleMonth;
+                  let as = a.scheduleYear + a.scheduleMonth;
+                  bs = parseInt(bs);
+                  as = parseInt(as);
+                  return bs - as;
+              }));
            });
         });
     }
