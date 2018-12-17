@@ -114,7 +114,7 @@ async function updateFile(req, res): Promise<void> {
 async function deleteFile(req, res): Promise<void> {
     const fileIndex: number = req.params.fileIndex;
     try {
-        const result: any = await file.deleteFile(fileIndex);
+        const result: any = await file.deleteFileGroupBoardIndexByFileIndex(fileIndex);
         res.send({
             success: true,
             statusCode: 200,

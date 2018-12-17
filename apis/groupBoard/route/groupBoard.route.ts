@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { groupBoard } from "../model/groupBoard.model";
+import { file } from "../../file/model/file.model";
 import { auth } from "../../../middlewares/auth.middlewares";
 
 export class GroupBoardRoute {
@@ -35,6 +36,7 @@ async function createGroupBoard(req, res): Promise<void> {
         req.body.groupBoardIndex = groupBoardModel.modelIndex+1;
         const result: any = await groupBoard.createGroupBoard(req.body);
         const groupBoardIdxRes: any = await groupBoard.incGroupBoardIndex(req.body.groupBoardIndex);
+        const updateFileResult: any = await file.updateFileGroupBoardIndex(req.body.groupBoardIndex, req.body.fileLocation);
         res.send({
             success: true,
             statusCode: 200,
@@ -133,6 +135,7 @@ async function deleteGroupBoard(req, res): Promise<void> {
     const groupBoardIndex: number = req.params.groupBoardIndex;
     try {
         const result: any = await groupBoard.deleteGroupBoard(groupBoardIndex);
+        const fileRes: any = await file.deleteFileGroupBoardIndex(groupBoardIndex);
         res.send({
             success: true,
             statusCode: 200,

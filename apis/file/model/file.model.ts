@@ -49,11 +49,38 @@ export class File {
         })
     }
 
+    updateFileGroupBoardIndex(groupBoardIndex: number, fileLocation: string): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+           await fileModel.findOneAndUpdate({location: fileLocation}, {$set: {groupBoardIndex: groupBoardIndex}}, {new: true}, (err, result) => {
+               if(err) reject(err);
+               else resolve(result);
+           });
+        });
+    }
+
+    deleteFileGroupBoardIndex(groupBoardIndex: number): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await fileModel.findOneAndUpdate({groupBoardIndex: groupBoardIndex}, {$set: {groupBoardIndex: 0}}, {new: true}, (err, result) => {
+                if(err) resolve(err);
+                else reject(result);
+            });
+        });
+    }
+
     updateFile(fileIndex: number, fileData: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
            await fileModel.findOneAndUpdate({fileIndex: fileIndex}, fileData, {new: true}, (err, result) => {
                if(err) reject(err);
                else resolve(result);
+            });
+        });
+    }
+
+    deleteFileGroupBoardIndexByFileIndex(fileIndex: number): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            await fileModel.findOneAndUpdate({fileIndex: fileIndex}, {$set: {groupBoardIndex: 0}}, {new: true}, (err, result) => {
+                if(err) resolve(err);
+                else reject(result);
             });
         });
     }
@@ -66,7 +93,6 @@ export class File {
            });
         });
     }
-
 }
 
 export const file: File = new File();
