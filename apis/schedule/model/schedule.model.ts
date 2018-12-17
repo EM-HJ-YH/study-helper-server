@@ -59,7 +59,11 @@ export class Schedule {
             await scheduleModel.find(check, (err, results) => {
                 if(err) reject(err);
                 else resolve(results.sort((a, b) => {
-                    return b.scheduleIndex - a.scheduleIndex;
+                    let bs = b.scheduleYear + b.scheduleMonth;
+                    let as = a.scheduleYear + a.scheduleMonth;
+                    bs = parseInt(bs);
+                    as = parseInt(as);
+                    return bs - as;
                 }));
             });
         });
