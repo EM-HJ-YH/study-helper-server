@@ -37,7 +37,7 @@ async function uploadFile(req, res): Promise<void> {
             res.send({
                 success: false,
                 statusCode: 403,
-                message: 'uploadFile: 500 : ' + err
+                message: 'uploadFile: 500 >> ' + err
             });
         }
         else {
